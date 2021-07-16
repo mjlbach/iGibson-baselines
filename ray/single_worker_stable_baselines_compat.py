@@ -121,11 +121,13 @@ class FC(nn.Module):
     def __init__(self, in_shape=232, out_shape=2):
         super(FC, self).__init__()
         self.fc1 = nn.Linear(in_shape, 64, bias=True)
-        self.fc2 = nn.Linear(64, out_shape, bias=True)
+        self.fc2 = nn.Linear(64, 64, bias=True)
+        self.fc3 = nn.Linear(64, out_shape, bias=True)
 
     def forward(self, x):
         x = torch.tanh(self.fc1(x))
         x = torch.tanh(self.fc2(x))
+        x = torch.tanh(self.fc3(x))
         return x
 
 class iGibsonPPOModel(TorchModelV2, nn.Module):

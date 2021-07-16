@@ -154,7 +154,6 @@ class iGibsonPPOModel(TorchModelV2, nn.Module):
 
         self._value_out = torch.flatten(self.value_head(policy_input))
         action_out = self.action_head(policy_input)
-        print(action_out.shape, self._value_out.shape)
 
         return action_out, []
 
@@ -237,7 +236,7 @@ if __name__ == '__main__':
         # ray specific
         "num_envs_per_worker": 1,
         # ray specific
-        "num_cpus_per_worker": 2,
+        "num_cpus_per_worker": 5,
         # equivalent to buffer size (num_envs * n_steps)
         "train_batch_size": 16384,
         # equivalent to learning rate
@@ -255,7 +254,7 @@ if __name__ == '__main__':
         # equivalent to clip_range
         "clip_param": 0.2,
         # -1 removes clipping, would be None in stable-baselines3
-        "clip_param_vf": -1,
+        "vf_clip_param": -1,
         "entropy_coeff": 0.0,
         "vf_loss_coeff": 0.5,
         # equivalent to max_grad_norm in stable-baselines3

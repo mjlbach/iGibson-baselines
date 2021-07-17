@@ -20,4 +20,4 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu/
 cd /sailhome/mjlbach/Repositories/iGibson
 source ~/.virtualenvs/igibsonvr/bin/activate
 
-python /sailhome/mjlbach/Repositories/iGibson-baselines/ray/single_worker_stable_baselines_compat.py --local_dir /viscam/u/mjlbach/igibson_training_runs_lidar_4 --config /sailhome/mjlbach/Repositories/iGibson-baselines/configs/turtlebot_point_nav.yaml
+python /sailhome/mjlbach/Repositories/iGibson-baselines/ray/shared_head.py --local_dir /viscam/u/mjlbach/igibson_training_runs_lidar_share_head --config /sailhome/mjlbach/Repositories/iGibson-baselines/configs/turtlebot_point_nav.yaml

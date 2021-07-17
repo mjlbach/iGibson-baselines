@@ -116,10 +116,10 @@ ray.init()
 
 #
 
-class FC(nn.Module):
+class FCHead(nn.Module):
 
     def __init__(self, in_shape=232, out_shape=64):
-        super(FC, self).__init__()
+        super(FCHead, self).__init__()
         self.fc1 = nn.Linear(in_shape, 64, bias=True)
         self.fc2 = nn.Linear(64, out_shape, bias=True)
 
@@ -128,10 +128,10 @@ class FC(nn.Module):
         x = torch.tanh(self.fc2(x))
         return x
 
-class FCHead(nn.Module):
+class FC(nn.Module):
 
     def __init__(self, in_shape=64, out_shape=2):
-        super(FCHead, self).__init__()
+        super(FC, self).__init__()
         self.fc1 = nn.Linear(in_shape, out_shape, bias=True)
 
     def forward(self, x):
@@ -147,9 +147,9 @@ class iGibsonPPOModel(TorchModelV2, nn.Module):
                               model_config, name)
         nn.Module.__init__(self)
 
-        self.share_head = FC(in_shape=232, out_shape=64)
-        self.value_head = FCHead(in_shape=64, out_shape=1)
-        self.action_head = FCHead(in_shape=64, out_shape=2)
+        self.share_head = FCHead(in_shape=232, out_shape=64)
+        self.value_head = FC(in_shape=64, out_shape=1)
+        self.action_head = FC(in_shape=64, out_shape=2)
 
     def forward(self, input_dict, state, seq_lens):
         obs = input_dict['obs']
@@ -163,7 +163,7 @@ class iGibsonPPOModel(TorchModelV2, nn.Module):
             dim=1
         )
 
-        shared = self.value_head(policy_input)
+        shared = self.share_head(policy_input)
         self._value_out = torch.flatten(self.value_head(shared))
         action_out = self.action_head(shared)
 
